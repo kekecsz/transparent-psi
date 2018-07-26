@@ -6,7 +6,7 @@ This is an application that supports psychological studies with data protection,
 
 - **The frontend** handles user interactions (via HTML event listeners) like: inputs, selectable answers and key controls. It gets the available languages from the backend and loads the selected one. After every user interaction it sends a push request to the backend with a user data [wrapper object](wrapper_object.md).
 
-- **The backend** fetches the available languages from a [github repository](https://github.com/gy0p4k/transparent-psi-languages) and updates the fronted with it. It also accepts the endpoint calls from the frontend, store the user object in a local git repository and pushes it to github realtime. In github all the rows are public and stored in a [csv file](https://github.com/gy0p4k/transparent-psi-results/blob/master/results.csv).
+- **The backend** fetches the available languages from a [github repository](https://github.com/gy0p4k/transparent-psi-languages) and updates the fronted with it. It also accepts the endpoint calls from the frontend, store the user object in a local git repository and pushes it to github in real time. In github all the rows are public and stored in a [csv file](https://github.com/gy0p4k/transparent-psi-results/).
 
 ## Technologies, resources
 
@@ -53,7 +53,7 @@ $ pm2 start frontend.sh
 - [`save.js`](backend/src/save.js) handles the saving and uploading process. The used dependencies are [`simple-git`](https://www.npmjs.com/package/simple-git) and [`csv-writer`](https://www.npmjs.com/package/csv-writer)
     - `save()` start the csv writing process and the remote repository synchronization
     - `csvProdWriter` and `csvTestWriter` are writer objects that can add new csv lines to the result file
-    - `gitPush()` is create a secure `ssh` connection with the remote server and synchronize the results with it via `git`
+    - `gitPush()` creates a secure `ssh` connection with the remote server and synchronize the results with it via `git`
 - [`user.js`](backend/src/user.js) serve user informations to the frontend (resource urls, language packages and template user objects)
 - [`shell.js`](backend/src/shell.js) start `python` shell jobs for language synchronization. It returns an EcmaScript6 Promise object
 
@@ -83,8 +83,8 @@ $ pm2 start frontend.sh
 
 - `[POST] /` receive a post request with the actual user data and start the saving job
     - example request body based on the [wrapper object](wrapper_object.md)
-    - example response is the same as request, so the frontend can check if the save was successful and the  request data is untouched
-- `[GET] /pic/:type` returns a randoom shuffled picture array that contains the names of the resource pictures based on the user's request
+    - example response is the same as request, so the frontend can check if the save was successful and the request data is untouched
+- `[GET] /pic/:type` returns a random shuffled picture array that contains the names of the resource pictures based on the user's request
     - available types:
         - `ff`
         - `fm`
@@ -131,7 +131,7 @@ $ pm2 start frontend.sh
         }
         ```
 
-- `[GET] /checkId/:labId/:expId` returns if the given laboratory id and experimenter id is correct (is in the database)
+- `[GET] /checkId/:labId/:expId` returns if the given laboratory id and experimenter id is correct (is in the database), and returns pre-specified scores associated with each experimenter ID.
     - example response:
     
         ```
